@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/test_shiro
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: admin
+  mvc:
+    view:
+      prefix: /pages/
+      suffix: .jsp
+mybatis:
+  mapper-locations: mappers/*.xml
+  type-aliases-package: com.bestcode.study.shiro.model

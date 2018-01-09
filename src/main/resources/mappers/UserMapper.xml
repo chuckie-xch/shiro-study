@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bestcode.study.shiro.mapper.UserMapper">
+    <resultMap id="userMap" type="com.bestcode.study.shiro.model.User">
+        <id property="uid" column="uid" />
+        <result property="username" column="username" />
+        <result property="password" column="password"/>
+        <collection property="roles" ofType="com.bestcode.study.shiro.model.Role" >
+            <id property="rid" column="rid" />
+            <result property="name" column="name" />
+            <collection property="permissions" ofType="com.bestcode.study.shiro.model.Permission" >
+                <id property="pid" column="pid" />
+                <result property="name" column="p_name" />
+                <result property="url" column="url" />
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="findByUsername" parameterType="string" resultMap="userMap" >
+      SELECT u.uid,u.username,u.password,r.name,p.name p_name,p.url
+      from USER u
+      LEFT JOIN user_role ur ON u.uid=ur.uid
+      left join role r on r.rid=ur.rid
+      left join permission_role pr on pr.rid=r.rid
+      left join permission p on p.pid=pr.pid
+      WHERE u.username=#{username}
+    </select>
+</mapper>
+
